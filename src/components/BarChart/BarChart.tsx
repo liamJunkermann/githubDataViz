@@ -100,7 +100,8 @@ export function BarChart(props: IBarChartProps) {
 
   React.useEffect(() => {
     draw();
-  }, [draw, props.data]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.data]);
 
   return (
     <div className="chart">
