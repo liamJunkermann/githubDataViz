@@ -25,11 +25,11 @@ export function BarChart(props: IBarChartProps) {
     let height = svgHeight - margin.top - margin.bottom;
 
     let sourceNames = [];
-    let soucreValues = [];
+    let sourceValues = [];
     for (let key in props.data) {
       if (props.data.hasOwnProperty(key)) {
         sourceNames.push(key);
-        soucreValues.push(props.data[key]);
+        sourceValues.push(props.data[key]);
       }
     }
 
@@ -47,17 +47,19 @@ export function BarChart(props: IBarChartProps) {
     x.domain(sourceNames);
     y.domain([
       0,
-      d3.max(soucreValues, function (d) {
+      d3.max(sourceValues, function (d) {
         return d;
       }),
     ]);
 
-    let svg = d3.select(ref.current).append("svg");
-    svg.attr("height", svgHeight).attr("width", svgWidth);
-
-    svg
+    var svg = d3
+      .select(ref.current)
+      .append("svg")
+      .attr("height", svgHeight)
+      .attr("width", svgWidth)
       .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    svg
       .append("g")
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + height + ")")
@@ -68,7 +70,7 @@ export function BarChart(props: IBarChartProps) {
     bars
       .append("rect")
       .attr("class", "bar")
-      .attr("x", function (d: string) {
+      .attr("x", function (d) {
         return x(d)!;
       })
       .attr("y", function (d) {
@@ -86,7 +88,7 @@ export function BarChart(props: IBarChartProps) {
       .text(function (d) {
         return props.data[d];
       })
-      .attr("x", function (d: string) {
+      .attr("x", function (d) {
         return x(d)! + barWidth / 2;
       })
       .attr("y", function (d) {
